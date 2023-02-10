@@ -1,0 +1,57 @@
+#!/bin/bash
+# Copyright (c) 2022-2023, AllWorldIT.
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to
+# deal in the Software without restriction, including without limitation the
+# rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
+# sell copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+# FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
+# IN THE SOFTWARE.
+
+
+# Load our configuration
+. /etc/gunicorn/gunicorn.conf
+
+
+export PATH=/var/www/virtualenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+# Next thing we do is check if we're bootstraping this node
+ARGS=()
+
+# Setup nubmer of workers and threads
+ARGS+=("--workers" "$GUNICORN_WORKERS")
+ARGS+=("--threads" "$GUNICORN_WORKER_THREADS")
+
+# Set directory for worker heartbeat
+ARGS+=("--worker-tmp-dir" "/var/tmp/gunicorn")
+
+# Log access logs to stdout so they can be picked up by supervisord
+ARGS+=("--access-logfile" "-")
+
+# Capture output from application
+ARGS+=("--capture-output")
+
+# Set worker class to gevent
+ARGS+=("--worker-class" "gevent")
+
+# Add our VENV Python path for the application dependencies
+ARGS+=("--pythonpath" "/var/www/virtualenv")
+
+# Add module and callable
+ARGS+=("$GUNICORN_MODULE:$GUNICORN_CALLABLE")
+
+# Make sure we're in the correct directory before we start gunicorn
+cd /var/www/app
+
+exec /var/www/virtualenv/bin/python /usr/bin/gunicorn "$@" "${ARGS[@]}"
