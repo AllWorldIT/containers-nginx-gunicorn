@@ -51,7 +51,7 @@ GUNICORN_CALLABLE="${GUNICORN_CALLABLE:-app}"
 
 
 # Check if we need to setup the virtualenv, this happens if we get a bind mounted blank virtualenv
-if [ ! -d /var/www/app/virtualenv/bin ]; then
+if [ ! -d /var/www/virtualenv/bin ]; then
 	fdc_notice "Creating Nginx Gunicorn VENV"
 	python -m venv --system-site-packages /var/www/virtualenv
 
