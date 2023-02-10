@@ -42,8 +42,6 @@ RUN set -eux; \
 	addgroup gunicorn www-data 2>/dev/null; \
 	true "Gunicorn directories"; \
 	mkdir -p /etc/gunicorn; \
-	true "Gunicorn VENV"; \
-	python -m venv --system-site-packages /var/www/virtualenv; \
 	true "Cleanup"; \
 	rm -f /var/cache/apk/*
 
