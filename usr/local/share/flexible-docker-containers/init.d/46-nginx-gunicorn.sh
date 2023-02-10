@@ -54,13 +54,14 @@ GUNICORN_CALLABLE="${GUNICORN_CALLABLE:-app}"
 if [ ! -d /var/www/app/virtualenv/bin ]; then
 	fdc_notice "Creating Nginx Gunicorn VENV"
 	python -m venv --system-site-packages /var/www/virtualenv
+
+	# If we have a requirements.txt file, ensure we install them
+	if [ -e /var/www/app/requirements.txt ]; then
+		fdc_notice "Installing Nginx Gunicorn app depedencies"
+		/var/www/virtualenv/bin/pip install --use-pep517 -r /var/www/app/requirements.txt
+	fi
 fi
 
-# If we have a requirements.txt file, ensure we install them
-if [ -e /var/www/app/requirements.txt ]; then
-	fdc_notice "Installing Nginx Gunicorn app depedencies"
-	/var/www/virtualenv/bin/pip install -r /var/www/app/requirements.txt
-fi
 
 # Write out environment and fix perms of the config file
 set | grep -E '^GUNICORN_(MODULE|CALLABLE|WORKER(S|_THREADS))=' > /etc/gunicorn/gunicorn.conf
