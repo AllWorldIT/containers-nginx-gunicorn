@@ -92,7 +92,7 @@ Application callable, defaults to `app`.
 # Volumes
 
 
-## /var/www/app
+## /app
 
 Application directory.
 
@@ -112,24 +112,24 @@ Configuration for Nginx can also be overridden, see the source for this containe
 [Conarx Containers Nginx image](https://gitlab.conarx.tech/containers/nginx) for more details.
 
 
-## /var/www/app/gunicorn.conf.py
+## /app/gunicorn.conf.py
 
 Gunicorn Python-based configuration file. See Gunicorn documentation for more details.
 
 
-## /var/www/app/requirements.txt
+## /app/requirements.txt
 
-If `/var/www/app/requirements.txt` exists, pip will be used to install the relevant dependencies.
+If `/app/requirements.txt` exists, pip will be used to install the relevant dependencies.
 
 The virtual environment along with dependencies can be persisted using a volume for `/var/www/virtualenv`.
 
 
-## /var/www/app/static/
+## /app/static/
 
 This directory will be served directly from Nginx bypassing Gunicorn by default.
 
 
-## /var/www/virtualenv/
+## /app/.venv/
 
 Virtual environment for the application, it will be automatically created if it doesn't exist.
 
