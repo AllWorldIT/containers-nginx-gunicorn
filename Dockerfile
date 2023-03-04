@@ -38,8 +38,8 @@ RUN set -eux; \
 	addgroup -S gunicorn 2>/dev/null; \
 	adduser -S -D -H -h /dev/null -s /sbin/nologin -G gunicorn -g gunicorn gunicorn 2>/dev/null; \
 	true "Web app"; \
-	mkdir -p /var/www/app; \
-	chown gunicorn:gunicorn /var/www/app; chmod 0755 /var/www/app; \
+	mkdir -p /app; \
+	chown gunicorn:gunicorn /app; chmod 0755 /app; \
 	addgroup gunicorn www-data 2>/dev/null; \
 	true "Gunicorn directories"; \
 	mkdir -p /etc/gunicorn; \

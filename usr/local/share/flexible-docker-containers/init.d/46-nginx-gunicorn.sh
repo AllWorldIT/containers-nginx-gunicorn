@@ -51,15 +51,15 @@ GUNICORN_CALLABLE="${GUNICORN_CALLABLE:-app}"
 
 
 # Check if we need to setup the virtualenv, this happens if we get a bind mounted blank virtualenv
-if [ ! -d /var/www/virtualenv/bin ]; then
+if [ ! -d /app/.venv/bin ]; then
 	fdc_notice "Creating Nginx Gunicorn VENV"
-	python -m venv --system-site-packages /var/www/virtualenv
-	/var/www/virtualenv/bin/pip install --no-cache --upgrade pip
+	python -m venv --system-site-packages /app/.venv
+	/app/.venv/bin/pip install --no-cache --upgrade pip
 
 	# If we have a requirements.txt file, ensure we install them
-	if [ -e /var/www/app/requirements.txt ]; then
+	if [ -e /app/requirements.txt ]; then
 		fdc_notice "Installing Nginx Gunicorn app depedencies"
-		/var/www/virtualenv/bin/pip install --no-cache --use-pep517 -r /var/www/app/requirements.txt
+		/app/.venv/bin/pip install --no-cache --use-pep517 --requirement /app/requirements.txt
 	fi
 fi
 
