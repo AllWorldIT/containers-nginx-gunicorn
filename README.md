@@ -65,12 +65,17 @@ Additional environment variables are available from...
 
 ## GUNICORN_WORKERS
 
-Number of GUNICORN workers to spawn, defaults to `2`.
+Number of Gunicorn workers to spawn, defaults to `2`.
+
+
+## GUNICORN_WORKER_CLASS
+
+Worker class to use with Gunicorn. eg. `uvicorn.workers.UvicornWorker`. Defaults to "".
 
 
 ## GUNICORN_WORKER_THREADS
 
-Number of GUNICORN workers to spawn, defaults to `2`.
+Number of Gunicorn workers to spawn, defaults to `2`.
 
 
 ## GUNICORN_MODULE

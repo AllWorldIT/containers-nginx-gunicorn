@@ -31,5 +31,9 @@ EOF
 
 echo "flask" > /var/www/app/requirements.txt
 
+if [ "$GUNICORN_WORKER_CLASS" = "uvicorn.workers.UvicornWorker" ]; then
+    echo "uvicorn" >> /var/www/app/requirements.txt
+fi
+
 mkdir /var/www/app/static
 echo '/* TEST STATIC SUCCESS */' > /var/www/app/static/file.css

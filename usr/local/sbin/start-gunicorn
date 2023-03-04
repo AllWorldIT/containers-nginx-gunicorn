@@ -33,6 +33,11 @@ ARGS=()
 ARGS+=("--workers" "$GUNICORN_WORKERS")
 ARGS+=("--threads" "$GUNICORN_WORKER_THREADS")
 
+# Check if we're using a specific worker class
+if [ -n "$GUNICORN_WORKER_CLASS" ]; then
+    ARGS+=("--worker-class" "$GUNICORN_WORKER_CLASS")
+fi
+
 # Set directory for worker heartbeat
 ARGS+=("--worker-tmp-dir" "/var/tmp/gunicorn")
 
