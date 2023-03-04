@@ -54,11 +54,12 @@ GUNICORN_CALLABLE="${GUNICORN_CALLABLE:-app}"
 if [ ! -d /var/www/virtualenv/bin ]; then
 	fdc_notice "Creating Nginx Gunicorn VENV"
 	python -m venv --system-site-packages /var/www/virtualenv
+	/var/www/virtualenv/bin/pip install --no-cache --upgrade pip
 
 	# If we have a requirements.txt file, ensure we install them
 	if [ -e /var/www/app/requirements.txt ]; then
 		fdc_notice "Installing Nginx Gunicorn app depedencies"
-		/var/www/virtualenv/bin/pip install --use-pep517 -r /var/www/app/requirements.txt
+		/var/www/virtualenv/bin/pip install --no-cache --use-pep517 -r /var/www/app/requirements.txt
 	fi
 fi
 

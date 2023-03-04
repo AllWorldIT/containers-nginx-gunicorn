@@ -36,6 +36,10 @@ ARGS+=("--threads" "$GUNICORN_WORKER_THREADS")
 # Check if we're using a specific worker class
 if [ -n "$GUNICORN_WORKER_CLASS" ]; then
     ARGS+=("--worker-class" "$GUNICORN_WORKER_CLASS")
+    echo "Using worker class: $GUNICORN_WORKER_CLASS"
+else
+    # Set worker class to gevent
+    ARGS+=("--worker-class" "gevent")
 fi
 
 # Set directory for worker heartbeat
@@ -46,9 +50,6 @@ ARGS+=("--access-logfile" "-")
 
 # Capture output from application
 ARGS+=("--capture-output")
-
-# Set worker class to gevent
-ARGS+=("--worker-class" "gevent")
 
 # Add our VENV Python path for the application dependencies
 ARGS+=("--pythonpath" "/var/www/virtualenv")
