@@ -24,7 +24,7 @@
 . /etc/gunicorn/gunicorn.conf
 
 
-export PATH=/var/www/virtualenv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH=/app/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Next thing we do is check if we're bootstraping this node
 ARGS=()
@@ -52,12 +52,12 @@ ARGS+=("--access-logfile" "-")
 ARGS+=("--capture-output")
 
 # Add our VENV Python path for the application dependencies
-ARGS+=("--pythonpath" "/var/www/virtualenv")
+ARGS+=("--pythonpath" "/app/.venv")
 
 # Add module and callable
 ARGS+=("$GUNICORN_MODULE:$GUNICORN_CALLABLE")
 
 # Make sure we're in the correct directory before we start gunicorn
-cd /var/www/app
+cd /app
 
-exec /var/www/virtualenv/bin/python /usr/bin/gunicorn "$@" "${ARGS[@]}"
+exec /app/.venv/bin/python /usr/bin/gunicorn "$@" "${ARGS[@]}"
