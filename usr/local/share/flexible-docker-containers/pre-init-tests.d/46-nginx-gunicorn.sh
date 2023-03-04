@@ -20,19 +20,31 @@
 # IN THE SOFTWARE.
 
 
-cat <<EOF > /var/www/app/app.py
+if [ "$GUNICORN_WORKER_CLASS" = "uvicorn.workers.UvicornWorker" ]; then
+    cat <<EOF > /var/www/app/app.py
+from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
+
+app = FastAPI()
+
+@app.get('/')
+def root():
+    return HTMLResponse(content='TEST SUCCESS\n', status_code=200)
+EOF
+    echo "uvicorn" >> /var/www/app/requirements.txt
+    echo "fastapi" >> /var/www/app/requirements.txt
+
+else
+    cat <<EOF > /var/www/app/app.py
 from flask import Flask
 app = Flask(__name__)
 
 @app.route('/')
-def hello_world():
+def root():
     return 'TEST SUCCESS\n'
 EOF
+    echo "flask" > /var/www/app/requirements.txt
 
-echo "flask" > /var/www/app/requirements.txt
-
-if [ "$GUNICORN_WORKER_CLASS" = "uvicorn.workers.UvicornWorker" ]; then
-    echo "uvicorn" >> /var/www/app/requirements.txt
 fi
 
 mkdir /var/www/app/static
