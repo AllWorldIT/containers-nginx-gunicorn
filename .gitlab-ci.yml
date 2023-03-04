@@ -2,3 +2,17 @@ include:
   - project: 'gitlab/templates/containers'
     ref: main
     file: '/default.yml'
+
+
+test-uvicorn:
+  stage: test
+  needs:
+    - build
+    - test
+  script:
+    - |
+      set -x
+      echo "Pulling '$PIPELINE_IMAGE'..."
+      docker pull "$PIPELINE_IMAGE"
+      docker run -e FDC_CI=true -e GUNICORN_WORKER_CLASS=uvicorn.workers.UvicornWorker "$PIPELINE_IMAGE"
+      set +x
