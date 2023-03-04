@@ -21,7 +21,7 @@
 
 
 if [ "$GUNICORN_WORKER_CLASS" = "uvicorn.workers.UvicornWorker" ]; then
-    cat <<EOF > /var/www/app/app.py
+    cat <<EOF > /app/app.py
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 
@@ -31,11 +31,11 @@ app = FastAPI()
 def root():
     return HTMLResponse(content='TEST SUCCESS\n', status_code=200)
 EOF
-    echo "uvicorn" >> /var/www/app/requirements.txt
-    echo "fastapi" >> /var/www/app/requirements.txt
+    echo "uvicorn" >> /app/requirements.txt
+    echo "fastapi" >> /app/requirements.txt
 
 else
-    cat <<EOF > /var/www/app/app.py
+    cat <<EOF > /app/app.py
 from flask import Flask
 app = Flask(__name__)
 
@@ -43,9 +43,9 @@ app = Flask(__name__)
 def root():
     return 'TEST SUCCESS\n'
 EOF
-    echo "flask" > /var/www/app/requirements.txt
+    echo "flask" > /app/requirements.txt
 
 fi
 
-mkdir /var/www/app/static
-echo '/* TEST STATIC SUCCESS */' > /var/www/app/static/file.css
+mkdir /app/static
+echo '/* TEST STATIC SUCCESS */' > /app/static/file.css
