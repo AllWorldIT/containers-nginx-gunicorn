@@ -32,6 +32,7 @@ RUN set -eux; \
 	apk add --no-cache \
 		py3-gunicorn \
 		py3-setproctitle \
+		# NK: check if Alpine Linux has Uvicorn on update
 		py3-gevent; \
 	true "Gunicorn user"; \
 	addgroup -S gunicorn 2>/dev/null; \
