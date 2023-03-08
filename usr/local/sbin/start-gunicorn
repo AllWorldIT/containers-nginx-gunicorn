@@ -21,6 +21,7 @@
 
 
 # Load our configuration
+# shellcheck disable=SC1091
 . /etc/gunicorn/gunicorn.conf
 
 
@@ -58,6 +59,7 @@ ARGS+=("--pythonpath" "/app/.venv")
 ARGS+=("$GUNICORN_MODULE:$GUNICORN_CALLABLE")
 
 # Make sure we're in the correct directory before we start gunicorn
+# shellcheck disable=SC2164
 cd /app
 
 exec /app/.venv/bin/python /usr/bin/gunicorn "$@" "${ARGS[@]}"
