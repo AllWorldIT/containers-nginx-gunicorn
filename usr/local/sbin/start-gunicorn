@@ -62,4 +62,14 @@ ARGS+=("$GUNICORN_MODULE:$GUNICORN_CALLABLE")
 # shellcheck disable=SC2164
 cd /app
 
+# Activate virtual environment
+. /app/.venv/bin/activate
+
+# Check if we have an environment set for gunicorn
+if [ -e /etc/gunicorn/gunicorn.env ]; then
+    set -a
+    . /etc/gunicorn/gunicorn.env
+    set +a
+fi
+
 exec /app/.venv/bin/python /usr/bin/gunicorn "$@" "${ARGS[@]}"
