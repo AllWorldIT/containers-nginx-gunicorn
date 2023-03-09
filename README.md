@@ -112,6 +112,11 @@ Configuration for Nginx can also be overridden, see the source for this containe
 [Conarx Containers Nginx image](https://gitlab.conarx.tech/containers/nginx) for more details.
 
 
+## /etc/gunicorn/gunicorn.env
+
+Environment to export to Gunicorn.
+
+
 ## /app/gunicorn.conf.py
 
 Gunicorn Python-based configuration file. See Gunicorn documentation for more details.
