@@ -46,6 +46,9 @@ fi
 # Set directory for worker heartbeat
 ARGS+=("--worker-tmp-dir" "/var/tmp/gunicorn")
 
+# Check if we have a specific log level
+ARGS+=("--log-level" "$GUNICORN_LOGLEVEL")
+
 # Log access logs to stdout so they can be picked up by supervisord
 ARGS+=("--access-logfile" "-")
 

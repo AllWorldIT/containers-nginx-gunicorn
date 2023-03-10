@@ -49,6 +49,9 @@ GUNICORN_WORKER_THREADS="${GUNICORN_WORKER_THREADS:-2}"
 GUNICORN_MODULE="${GUNICORN_MODULE:-app}"
 GUNICORN_CALLABLE="${GUNICORN_CALLABLE:-app}"
 
+# Other defaults
+GUNICORN_LOGLEVEL="${GUNICORN_LOGLEVEL:-info}"
+
 
 # Check if we need to setup the virtualenv, this happens if we get a bind mounted blank virtualenv
 if [ ! -d /app/.venv/bin ]; then
@@ -65,6 +68,6 @@ fi
 
 
 # Write out environment and fix perms of the config file
-set | grep -E '^GUNICORN_(MODULE|CALLABLE|WORKER(S|_THREADS|_CLASS))=' > /etc/gunicorn/gunicorn.conf
+set | grep -E '^GUNICORN_(MODULE|CALLABLE|LOGLEVEL|WORKER(S|_THREADS|_CLASS))=' > /etc/gunicorn/gunicorn.conf
 chown root:gunicorn /etc/gunicorn/gunicorn.conf
 chmod 0640 /etc/gunicorn/gunicorn.conf
