@@ -88,6 +88,11 @@ Application module to use, defaults to `app`.
 Application callable, defaults to `app`.
 
 
+## GUNICORN_LOGLEVEL
+
+Gunicorn log level, defaults to `info`.
+
+
 
 # Volumes
 
