@@ -39,7 +39,6 @@ RUN set -eux; \
 	adduser -S -D -H -h /dev/null -s /sbin/nologin -G gunicorn -g gunicorn gunicorn 2>/dev/null; \
 	true "Web app"; \
 	mkdir -p /app; \
-	chown gunicorn:gunicorn /app; chmod 0755 /app; \
 	addgroup gunicorn www-data 2>/dev/null; \
 	true "Gunicorn directories"; \
 	mkdir -p /etc/gunicorn; \
@@ -69,8 +68,10 @@ RUN set -eux; \
 	chown gunicorn:gunicorn \
 		/etc/gunicorn; \
 	chown root:root \
+		/app \
 		/usr/local/sbin/start-gunicorn; \
 	chmod 0755 \
+		/app \
 		/etc/gunicorn \
 		/usr/local/sbin/start-gunicorn; \
 	fdc set-perms
