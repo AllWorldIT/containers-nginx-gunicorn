@@ -146,6 +146,16 @@ Virtual environment for the application, it will be automatically created if it 
 If it's been bind mounted as a volume, one can clear it out if required for it to be re-created on next container start.
 
 
+## /run/gunicorn
+
+Run directory.
+
+
+## /var/tmp/gunicorn
+
+Temporary directory.
+
+
 
 # Health Checks
 
