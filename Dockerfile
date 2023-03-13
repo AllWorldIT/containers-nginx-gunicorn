@@ -36,7 +36,7 @@ RUN set -eux; \
 		py3-gevent; \
 	true "Gunicorn user"; \
 	addgroup -S gunicorn 2>/dev/null; \
-	adduser -S -D -H -h /dev/null -s /sbin/nologin -G gunicorn -g gunicorn gunicorn 2>/dev/null; \
+	adduser -S -D -H -h /app -s /sbin/nologin -G gunicorn -g gunicorn gunicorn 2>/dev/null; \
 	true "Web app"; \
 	mkdir -p /app; \
 	addgroup gunicorn www-data 2>/dev/null; \
