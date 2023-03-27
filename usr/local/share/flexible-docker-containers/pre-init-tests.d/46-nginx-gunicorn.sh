@@ -31,8 +31,10 @@ app = FastAPI()
 def root():
     return HTMLResponse(content='TEST SUCCESS\n', status_code=200)
 EOF
-    echo "uvicorn" >> /app/requirements.txt
-    echo "fastapi" >> /app/requirements.txt
+    cat <<EOF > /app/requirements.txt
+uvicorn[standard]
+fastapi
+EOF
 
 else
     cat <<EOF > /app/app.py
@@ -43,7 +45,9 @@ app = Flask(__name__)
 def root():
     return 'TEST SUCCESS\n'
 EOF
-    echo "flask" > /app/requirements.txt
+    cat <<EOF > /app/requirements.txt
+flask
+EOF
 
 fi
 
