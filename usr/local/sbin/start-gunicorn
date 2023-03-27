@@ -25,7 +25,7 @@
 . /etc/gunicorn/gunicorn.conf
 
 
-export PATH=/app/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 # Next thing we do is check if we're bootstraping this node
 ARGS=()
@@ -66,13 +66,21 @@ ARGS+=("$GUNICORN_MODULE:$GUNICORN_CALLABLE")
 cd /app
 
 # Activate virtual environment
+# shellcheck disable=SC1091
 . /app/.venv/bin/activate
 
 # Check if we have an environment set for gunicorn
 if [ -e /etc/gunicorn/gunicorn.env ]; then
     set -a
+    # shellcheck disable=SC1091
     . /etc/gunicorn/gunicorn.env
     set +a
 fi
 
-exec /app/.venv/bin/python /usr/bin/gunicorn "$@" "${ARGS[@]}"
+# Check if we have gunicorn installed in the venv, if we do run it from there
+if [ -e /app/.venv/bin/gunicorn ]; then
+    exec gunicorn "$@" "${ARGS[@]}"
+# If not use the system gunicorn, but run within the venv
+else
+    exec python /usr/bin/gunicorn "$@" "${ARGS[@]}"
+fi
