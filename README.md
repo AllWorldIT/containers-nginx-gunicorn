@@ -129,9 +129,11 @@ Gunicorn Python-based configuration file. See Gunicorn documentation for more de
 
 ## /app/requirements.txt
 
+For `uvicorn` workers, the `requirements.txt` needs to contain `uvicorn[standard]`.
+
 If `/app/requirements.txt` exists, pip will be used to install the relevant dependencies.
 
-The virtual environment along with dependencies can be persisted using a volume for `/var/www/virtualenv`.
+The virtual environment along with dependencies can be persisted using a volume for `/app/.venv`.
 
 
 ## /app/static/
