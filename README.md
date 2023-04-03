@@ -93,6 +93,11 @@ Application callable, defaults to `app`.
 Gunicorn log level, defaults to `info`.
 
 
+## GUNICORN_ACCESS_LOGFILE
+
+Gunicorn access logfile, defaults to not being set. Can be set to `-` to log to Docker.
+
+
 
 # Volumes
 

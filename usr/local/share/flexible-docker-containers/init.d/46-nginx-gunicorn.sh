@@ -68,6 +68,6 @@ fi
 
 
 # Write out environment and fix perms of the config file
-set | grep -E '^GUNICORN_(MODULE|CALLABLE|LOGLEVEL|WORKER(S|_THREADS|_CLASS))=' > /etc/gunicorn/gunicorn.conf
+set | grep -E '^GUNICORN_(ACCESS_LOGFILE|MODULE|CALLABLE|LOGLEVEL|WORKER(S|_THREADS|_CLASS))=' > /etc/gunicorn/gunicorn.conf
 chown root:gunicorn /etc/gunicorn/gunicorn.conf
 chmod 0640 /etc/gunicorn/gunicorn.conf
