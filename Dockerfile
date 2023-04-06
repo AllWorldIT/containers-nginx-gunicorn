@@ -21,6 +21,7 @@
 
 FROM registry.conarx.tech/containers/nginx/3.17
 
+
 ARG VERSION_INFO=
 LABEL org.opencontainers.image.authors   "Nigel Kukard <nkukard@conarx.tech>"
 LABEL org.opencontainers.image.version   "3.17"
@@ -52,7 +53,8 @@ RUN set -eux; \
 
 
 # Nginx - override the default vhost to include UWSGI support
-COPY etc/nginx/http.d/50_vhost_default.conf /etc/nginx/http.d
+COPY etc/nginx/http.d/50_vhost_default.conf.template /etc/nginx/http.d
+COPY etc/nginx/http.d/50_vhost_default-ssl-certbot.conf.template /etc/nginx/http.d
 
 
 # Gunicorn
@@ -69,7 +71,12 @@ RUN set -eux; \
 		/etc/gunicorn; \
 	chown root:root \
 		/app \
+		/etc/nginx/http.d/50_vhost_default.conf.template \
+		/etc/nginx/http.d/50_vhost_default-ssl-certbot.conf.template \
 		/usr/local/sbin/start-gunicorn; \
+	chmod 0644 \
+		/etc/nginx/http.d/50_vhost_default.conf.template \
+		/etc/nginx/http.d/50_vhost_default-ssl-certbot.conf.template; \
 	chmod 0755 \
 		/app \
 		/etc/gunicorn \
