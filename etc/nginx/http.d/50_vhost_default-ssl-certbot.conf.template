@@ -20,8 +20,8 @@
 
 
 server {
-	listen [::]:80 ipv6only=off default_server;
-	server_name _;
+	listen [::]:443 ipv6only=off ssl http2;
+	server_name @SERVER_NAME@;
 
 	location = /favicon.ico {
 		log_not_found off;
@@ -51,6 +51,10 @@ server {
 		proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 		proxy_set_header X-Forwarded-Proto $scheme;
 
+		# Allow websockets
+		proxy_set_header Upgrade $http_upgrade;
+		proxy_set_header Connection "Upgrade";
+		
 		# we don't want nginx trying to do something clever with
 		# redirects, we set the Host: header above already.
 
