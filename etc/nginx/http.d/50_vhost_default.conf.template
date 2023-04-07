@@ -34,13 +34,13 @@ server {
 		access_log off;
 	}
 
-    location /static/ {
+	location /static/ {
 		alias /app/static/;
 
 		location ~* \.(js|css|gif|ico|jpg|jpeg|png)$ {
 			expires max;
 		}
-    }
+	}
 
 	location / {
 		proxy_redirect off;
@@ -54,7 +54,7 @@ server {
 		# Allow websockets
 		proxy_set_header Upgrade $http_upgrade;
 		proxy_set_header Connection "Upgrade";
-		
+
 		# we don't want nginx trying to do something clever with
 		# redirects, we set the Host: header above already.
 
