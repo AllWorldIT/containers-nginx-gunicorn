@@ -32,9 +32,17 @@ def root():
     return HTMLResponse(content='TEST SUCCESS\n', status_code=200)
 EOF
     cat <<EOF > /app/requirements.txt
-uvicorn[standard]
 fastapi
 EOF
+
+python -m venv /app/.venv
+(
+    # shellcheck disable=SC1091
+    . /app/.venv/bin/activate
+
+    pip install 'uvicorn[standard]' 'gunicorn' 'setproctitle' 'gevent'
+    pip install -r /app/requirements.txt
+)
 
 else
     cat <<EOF > /app/app.py
@@ -49,7 +57,17 @@ EOF
 flask
 EOF
 
+python -m venv /app/.venv
+(
+    # shellcheck disable=SC1091
+    . /app/.venv/bin/activate
+
+    pip install 'gunicorn' 'setproctitle' 'gevent'
+    pip install -r /app/requirements.txt
+)
+
 fi
+
 
 mkdir /app/static
 echo '/* TEST STATIC SUCCESS */' > /app/static/file.css
