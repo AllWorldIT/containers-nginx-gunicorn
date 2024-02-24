@@ -30,12 +30,6 @@ LABEL org.opencontainers.image.base.name "registry.conarx.tech/containers/nginx/
 
 
 RUN set -eux; \
-	true "Gunicorn"; \
-	apk add --no-cache \
-		py3-gunicorn \
-		py3-setproctitle \
-		# NK: check if Alpine Linux has Uvicorn on update
-		py3-gevent; \
 	true "Gunicorn user"; \
 	addgroup -S gunicorn 2>/dev/null; \
 	adduser -S -D -H -h /app -s /sbin/nologin -G gunicorn -g gunicorn gunicorn 2>/dev/null; \
