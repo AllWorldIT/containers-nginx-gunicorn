@@ -157,7 +157,7 @@ docker run -it --rm \
     -v /path/to/venv:/app/.venv \
     -v /path/to/app/requirements.txt:/app/requirements.txt \
     allworldit/nginx-gunicorn \
-    /bin/sh -c "python -m venv /app/.venv; . /app/.venv/bin/activate; pip intall 'uvicorn[standard]' 'gunicorn' 'setproctitle'; pip install --requirement /app/requirements.txt"
+    /bin/sh -c "python -m venv /app/.venv; . /app/.venv/bin/activate; pip install 'uvicorn[standard]' 'gunicorn' 'setproctitle'; pip install --requirement /app/requirements.txt"
 ```
 
 or using the following without Uvicorn workers...
@@ -167,7 +167,7 @@ docker run -it --rm \
     -v /path/to/venv:/app/.venv \
     -v /path/to/app/requirements.txt:/app/requirements.txt \
     allworldit/nginx-gunicorn \
-    /bin/sh -c "python -m venv /app/.venv; . /app/.venv/bin/activate; pip intall 'gunicorn' 'setproctitle' 'gevent'; pip install --requirement /app/requirements.txt"
+    /bin/sh -c "python -m venv /app/.venv; . /app/.venv/bin/activate; pip install 'gunicorn' 'setproctitle' 'gevent'; pip install --requirement /app/requirements.txt"
 ```
 
 
