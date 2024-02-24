@@ -148,10 +148,17 @@ This directory will be served directly from Nginx bypassing Gunicorn by default.
 
 ## /app/.venv/
 
-Virtual environment for the application, it will be automatically created if it doesn't exist.
+Virtual environment for the application which must be created beforehand. The requirement `uvicorn[standard]` must be included.
 
-If it's been bind mounted as a volume, one can clear it out if required for it to be re-created on next container start.
+This can be created with...
 
+```sh
+docker run -it --rm \
+    -v /path/to/venv:/app/.venv \
+    -v /path/to/app/requirements.txt:/app/requirements.txt \
+    allworldit/nginx-gunicorn \
+    /bin/sh -c "python -m venv /app/.venv; . /app/.venv/bin/activate; pip intall 'uvicorn[standard]'; pip install --requirement /app/requirements.txt"
+```
 
 ## /run/gunicorn
 
