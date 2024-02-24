@@ -53,20 +53,6 @@ GUNICORN_CALLABLE="${GUNICORN_CALLABLE:-app}"
 GUNICORN_LOGLEVEL="${GUNICORN_LOGLEVEL:-info}"
 
 
-# Check if we need to setup the virtualenv, this happens if we get a bind mounted blank virtualenv
-if [ ! -d /app/.venv/bin ]; then
-	fdc_notice "Creating Nginx Gunicorn VENV"
-	python -m venv --system-site-packages /app/.venv
-	/app/.venv/bin/pip install --no-cache --upgrade pip
-
-	# If we have a requirements.txt file, ensure we install them
-	if [ -e /app/requirements.txt ]; then
-		fdc_notice "Installing Nginx Gunicorn app depedencies"
-		/app/.venv/bin/pip install --no-cache --use-pep517 --requirement /app/requirements.txt
-	fi
-fi
-
-
 # Write out environment and fix perms of the config file
 set | grep -E '^GUNICORN_(ACCESS_LOGFILE|MODULE|CALLABLE|LOGLEVEL|WORKER(S|_THREADS|_CLASS))=' > /etc/gunicorn/gunicorn.conf
 chown root:gunicorn /etc/gunicorn/gunicorn.conf
