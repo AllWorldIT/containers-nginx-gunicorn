@@ -150,15 +150,26 @@ This directory will be served directly from Nginx bypassing Gunicorn by default.
 
 Virtual environment for the application which must be created beforehand. The requirement `uvicorn[standard]` must be included.
 
-This can be created with...
+This can be created with the following for Uvicorn workers...
 
 ```sh
 docker run -it --rm \
     -v /path/to/venv:/app/.venv \
     -v /path/to/app/requirements.txt:/app/requirements.txt \
     allworldit/nginx-gunicorn \
-    /bin/sh -c "python -m venv /app/.venv; . /app/.venv/bin/activate; pip intall 'uvicorn[standard]'; pip install --requirement /app/requirements.txt"
+    /bin/sh -c "python -m venv /app/.venv; . /app/.venv/bin/activate; pip intall 'uvicorn[standard]' 'gunicorn' 'setproctitle'; pip install --requirement /app/requirements.txt"
 ```
+
+or using the following without Uvicorn workers...
+
+```sh
+docker run -it --rm \
+    -v /path/to/venv:/app/.venv \
+    -v /path/to/app/requirements.txt:/app/requirements.txt \
+    allworldit/nginx-gunicorn \
+    /bin/sh -c "python -m venv /app/.venv; . /app/.venv/bin/activate; pip intall 'gunicorn' 'setproctitle' 'gevent'; pip install --requirement /app/requirements.txt"
+```
+
 
 ## /run/gunicorn
 
