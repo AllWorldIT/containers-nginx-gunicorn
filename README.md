@@ -98,6 +98,11 @@ Gunicorn log level, defaults to `info`.
 Gunicorn access logfile, defaults to not being set. Can be set to `-` to log to Docker.
 
 
+## GUNICORN_ENV_*
+
+Environment to export to Gunicorn, where `GUNICORN_ENV_` will be stripped from each item.
+
+
 
 # Volumes
 
@@ -124,7 +129,8 @@ Configuration for Nginx can also be overridden, see the source for this containe
 
 ## /etc/gunicorn/gunicorn.env
 
-Environment to export to Gunicorn.
+Environment to export to Gunicorn. This is created from `GUNICORN_ENV_*` where `GUNICORN_ENV_` is stripped off if it does not exist
+an there are environment variables with that name.
 
 
 ## /app/gunicorn.conf.py
