@@ -57,3 +57,15 @@ GUNICORN_LOGLEVEL="${GUNICORN_LOGLEVEL:-info}"
 set | grep -E '^GUNICORN_(ACCESS_LOGFILE|MODULE|CALLABLE|LOGLEVEL|WORKER(S|_THREADS|_CLASS))=' > /etc/gunicorn/gunicorn.conf
 chown root:gunicorn /etc/gunicorn/gunicorn.conf
 chmod 0640 /etc/gunicorn/gunicorn.conf
+
+# Decide what we're doing about the app environment
+if [ ! -e /etc/gunicorn/gunicorn.env ]; then
+	if set | grep -q -E '^GUNICORN_ENV_'; then
+		fdc_notice "Writing out custom Gunicorn environment variables"
+		set | grep -E '^GUNICORN_ENV_' | sed -e 's/^GUNICORN_ENV_//' > /etc/gunicorn/gunicorn.env
+	fi
+fi
+if [ -e /etc/gunicorn/gunicorn.env ]; then
+	chown root:gunicorn /etc/gunicorn/gunicorn.env
+	chmod 0640 /etc/gunicorn/gunicorn.env
+fi
